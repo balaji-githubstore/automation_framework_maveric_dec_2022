@@ -5,15 +5,27 @@ namespace EmployeeManagement
 {
     public class LoginUITest
     {
-        [Test]
-        public void ValidateTitleTest()
+        IWebDriver driver;
+
+        [SetUp]
+        public void BeforeMethod()
         {
-            IWebDriver driver = new ChromeDriver();
+            driver = new ChromeDriver();
             driver.Manage().Window.Maximize();
             driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(20);
 
             driver.Url = "https://opensource-demo.orangehrmlive.com/";
+        }
 
+        [TearDown]
+        public void AfterMethod()
+        {
+            driver.Quit();
+        }
+
+        [Test]
+        public void ValidateTitleTest()
+        {
             string actualTitle = driver.Title;
             Assert.That(actualTitle, Is.EqualTo("OrangeHRM"));
         }
@@ -21,13 +33,7 @@ namespace EmployeeManagement
         [Test]
         public void ValidatePlaceholderTest()
         {
-            IWebDriver driver = new ChromeDriver();
-            driver.Manage().Window.Maximize();
-            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(20);
-
-            driver.Url = "https://opensource-demo.orangehrmlive.com/";
-
-            string actualUsernamePlaceholder=driver.FindElement(By.Name("username")).GetAttribute("placeholder");
+            string actualUsernamePlaceholder = driver.FindElement(By.Name("username")).GetAttribute("placeholder");
             string actualPasswordPlaceholder = driver.FindElement(By.Name("password")).GetAttribute("placeholder");
 
             Assert.That(actualUsernamePlaceholder, Is.EqualTo("Username"));
