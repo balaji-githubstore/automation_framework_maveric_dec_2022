@@ -6,7 +6,7 @@ namespace EmployeeManagement
 {
     public class LoginUITest : AutomationWrapper
     {
-        [Test]
+        [Test,Repeat(3),Retry(2)]
         public void ValidateTitleTest()
         {
             string actualTitle = driver.Title;

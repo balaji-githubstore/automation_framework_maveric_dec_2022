@@ -30,7 +30,13 @@ namespace EmployeeManagement
             driver.FindElement(By.Name("password")).SendKeys("john123");
             driver.FindElement(By.XPath("//button[normalize-space()='Login']")).Click();
 
+           string actualError= driver.FindElement(By.XPath("//p[contains(normalize-space(),'cred')]")).Text;
+
+            Console.WriteLine(actualError.ToUpper());
+
             //Assert the error message Invalid credentials
+            Assert.That(actualError.Contains("Invalid credential"),"Assertion on error message");
+
         }
     }
 }
