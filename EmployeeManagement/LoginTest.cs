@@ -23,10 +23,31 @@ namespace EmployeeManagement
             Assert.That(actualUrl, Is.EqualTo("https://opensource-demo.orangehrmlive.com/web/index.php/dashboard/index"));
         }
 
-        [Test]
-        [TestCase("john", "john123", "Invalid credential")]
-        [TestCase("peter", "peter233", "Invalid credential")]
-        [TestCase("saul", "saul123", "Invalid credential")]
+
+        public static object[] InvalidLoginData()
+        {
+            string[] dataSet1 = new string[3];
+            dataSet1[0] = "john";
+            dataSet1[1] = "john123";
+            dataSet1[2] = "Invalid credential";
+
+            string[] dataSet2 = new string[3];
+            dataSet2[0] = "peter";
+            dataSet2[1] = "peter123";
+            dataSet2[2] = "Invalid credential";
+
+            object[] allDataSets=new object[2];
+
+            allDataSets[0] = dataSet1;
+            allDataSets[1] = dataSet2;
+
+            return allDataSets;
+        }
+
+        [Test,TestCaseSource(nameof(InvalidLoginData))]
+        //[TestCase("john", "john123", "Invalid credential")]
+        //[TestCase("peter", "peter233", "Invalid credential")]
+        //[TestCase("saul", "saul123", "Invalid credential")]
         public void InvalidLoginTest(string username, string password, string expectedError)
         {
             driver.FindElement(By.Name("username")).SendKeys(username);
