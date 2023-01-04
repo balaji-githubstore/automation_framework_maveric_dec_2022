@@ -16,12 +16,21 @@ namespace EmployeeManagement
         public void ValidLoginTest()
         {
             driver.FindElement(By.Name("username")).SendKeys("Admin");
-            //enter password as admin123
-            //click on login 
+            driver.FindElement(By.Name("password")).SendKeys("admin123");
+            driver.FindElement(By.XPath("//button[normalize-space()='Login']")).Click();
 
-            //Assert the url 
+            string actualUrl= driver.Url;
+            Assert.That(actualUrl, Is.EqualTo("https://opensource-demo.orangehrmlive.com/web/index.php/dashboard/index"));
         }
 
+        [Test]
+        public void InvalidLoginTest()
+        {
+            driver.FindElement(By.Name("username")).SendKeys("john");
+            driver.FindElement(By.Name("password")).SendKeys("john123");
+            driver.FindElement(By.XPath("//button[normalize-space()='Login']")).Click();
 
+            //Assert the error message Invalid credentials
+        }
     }
 }
