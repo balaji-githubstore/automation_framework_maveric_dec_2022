@@ -19,24 +19,25 @@ namespace EmployeeManagement
             driver.FindElement(By.Name("password")).SendKeys("admin123");
             driver.FindElement(By.XPath("//button[normalize-space()='Login']")).Click();
 
-            string actualUrl= driver.Url;
+            string actualUrl = driver.Url;
             Assert.That(actualUrl, Is.EqualTo("https://opensource-demo.orangehrmlive.com/web/index.php/dashboard/index"));
         }
 
         [Test]
-        public void InvalidLoginTest()
+        [TestCase("john", "john123", "Invalid credential")]
+        [TestCase("peter", "peter233", "Invalid credential")]
+        [TestCase("saul", "saul123", "Invalid credential")]
+        public void InvalidLoginTest(string username, string password, string expectedError)
         {
-            driver.FindElement(By.Name("username")).SendKeys("john");
-            driver.FindElement(By.Name("password")).SendKeys("john123");
+            driver.FindElement(By.Name("username")).SendKeys(username);
+            driver.FindElement(By.Name("password")).SendKeys(password);
             driver.FindElement(By.XPath("//button[normalize-space()='Login']")).Click();
 
-           string actualError= driver.FindElement(By.XPath("//p[contains(normalize-space(),'cred')]")).Text;
-
+            string actualError = driver.FindElement(By.XPath("//p[contains(normalize-space(),'cred')]")).Text;
             Console.WriteLine(actualError.ToUpper());
 
             //Assert the error message Invalid credentials
-            Assert.That(actualError.Contains("Invalid credential"),"Assertion on error message");
-
+            Assert.That(actualError.Contains(expectedError), "Assertion on error message");
         }
     }
 }
