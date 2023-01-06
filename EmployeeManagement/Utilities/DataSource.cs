@@ -8,6 +8,7 @@ namespace EmployeeManagement.Utilities
 {
     public class DataSource
     {
+
         public static object[] InvalidLoginData()
         {
             string[] dataSet1 = new string[3];
@@ -54,10 +55,21 @@ namespace EmployeeManagement.Utilities
             return allData;
         }
 
-        //run above test with two test case 
-        //        admin, admin123, John, W, Wick, John Wick
-        //admin,admin123,Saul, g, goodman, Saul Goodman
+        public static object[] InvalidLoginData2()
+        {
+            object[] data = ExcelUtils.GetSheetIntoObjectArray
+                 (@"C:\Mine\Company\Maveric C# 2022\AutomationFramework\EmployeeManagement\TestData\orange_data.xlsx"
+                    ,"InvalidLoginTest");
+            return data;
+        }
 
+        public static object[] AddValidEmployeeData2()
+        {
+            object[] data = ExcelUtils.GetSheetIntoObjectArray
+                 (@"C:\Mine\Company\Maveric C# 2022\AutomationFramework\EmployeeManagement\TestData\orange_data.xlsx"
+                    , "AddValidEmployeeTest");
+            return data;
+        }
     }
 }
 

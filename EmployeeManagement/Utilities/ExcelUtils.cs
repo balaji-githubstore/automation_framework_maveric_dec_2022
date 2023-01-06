@@ -9,7 +9,12 @@ namespace EmployeeManagement.Utilities
 {
     public class ExcelUtils
     {
-
+        /// <summary>
+        /// Code to conver sheet into object[]
+        /// </summary>
+        /// <param name="file">excel file path</param>
+        /// <param name="sheetName">sheet name </param>
+        /// <returns>object[]</returns>
         public static object[] GetSheetIntoObjectArray(string file,string sheetName)
         {
             using (XLWorkbook book = new XLWorkbook(file))
@@ -25,13 +30,11 @@ namespace EmployeeManagement.Utilities
 
                 for (int r = 2; r <= rowCount; r++)
                 {
-                    string[] arr = new string[3];
+                    string[] arr = new string[columnCount];
 
                     for (int c = 1; c <= columnCount ; c++)
                     {
-                        string value = range.Cell(r, c).GetString();
-                        Console.WriteLine(value);
-                        arr[c - 1] = value;
+                        arr[c - 1] = range.Cell(r, c).GetString();
                     }
                     allData[r - 2] = arr;
                 }
