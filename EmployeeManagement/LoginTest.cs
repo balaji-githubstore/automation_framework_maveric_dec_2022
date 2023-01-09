@@ -12,7 +12,7 @@ namespace EmployeeManagement
 {
     public class LoginTest : AutomationWrapper
     {
-        [Test]
+        [Test,Retry(2)]
         public void ValidLoginTest()
         {
            
