@@ -7,19 +7,18 @@ using System.Threading.Tasks;
 
 namespace EmployeeManagement.Pages
 {
-    public class ForgotPasswordPage
+    public class PIMPage
     {
-
         private IWebDriver driver;
 
-        public ForgotPasswordPage(IWebDriver driver)
+        public PIMPage(IWebDriver driver)
         {
             this.driver = driver;
         }
 
-        public void ClickOnResetPassword()
+        public void ClickOnAddEmployee()
         {
-            driver.FindElement(By.XPath("")).Click();
+            driver.FindElement(By.LinkText("Add Employee")).Click();
         }
     }
 }

@@ -1,4 +1,5 @@
 using EmployeeManagement.Base;
+using EmployeeManagement.Pages;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 
@@ -16,11 +17,13 @@ namespace EmployeeManagement
         [Test]
         public void ValidatePlaceholderTest()
         {
-            string actualUsernamePlaceholder = driver.FindElement(By.Name("username")).GetAttribute("placeholder");
-            string actualPasswordPlaceholder = driver.FindElement(By.Name("password")).GetAttribute("placeholder");
+            LoginPage loginPage = new LoginPage(driver);
+
+            string actualUsernamePlaceholder = loginPage.GetUserNamePlaceholder();
+            //string actualPasswordPlaceholder = loginPage.GetPasswordPlaceholder();
 
             Assert.That(actualUsernamePlaceholder, Is.EqualTo("Username"));
-            Assert.That(actualPasswordPlaceholder, Is.EqualTo("Password"));
+            Assert.That(loginPage.GetPasswordPlaceholder(), Is.EqualTo("Password"));
         }
 
     }

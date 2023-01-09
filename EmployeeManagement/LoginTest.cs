@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using EmployeeManagement.Base;
 using EmployeeManagement.Utilities;
+using EmployeeManagement.Pages;
 
 namespace EmployeeManagement
 {
@@ -15,25 +16,29 @@ namespace EmployeeManagement
         [Test,Retry(2)]
         public void ValidLoginTest()
         {
-           
-            driver.FindElement(By.Name("username")).SendKeys("Admin");
-            driver.FindElement(By.Name("password")).SendKeys("admin123");
-            driver.FindElement(By.XPath("//button[normalize-space()='Login']")).Click();
+            LoginPage loginPage= new LoginPage(driver);
 
-            string actualUrl = driver.Url;
+            loginPage.EnterUsername("Admin");
+            loginPage.EnterPassword("admin123");
+            loginPage.ClickOnLogin();
+
+            MainPage mainPage=new MainPage(driver);
+
+            string actualUrl = mainPage.GetMainpageUrl();
             Assert.That(actualUrl, Is.EqualTo("https://opensource-demo.orangehrmlive.com/web/index.php/dashboard/index"));
         }
 
         [Test,TestCaseSource(typeof(DataSource), nameof(DataSource.InvalidLoginData2))]
         public void InvalidLoginTest(string username, string password, string expectedError)
         {
-            driver.FindElement(By.Name("username")).SendKeys(username);
-            driver.FindElement(By.Name("password")).SendKeys(password);
-            driver.FindElement(By.XPath("//button[normalize-space()='Login']")).Click();
+            LoginPage loginPage = new LoginPage(driver);
 
-            string actualError = driver.FindElement(By.XPath("//p[contains(normalize-space(),'cred')]")).Text;
-            Console.WriteLine(actualError.ToUpper());
+            loginPage.EnterUsername(username);
+            loginPage.EnterPassword(password);
+            loginPage.ClickOnLogin();
 
+            string actualError = loginPage.GetInvalidErrorMessage();
+ 
             //Assert the error message Invalid credentials
             Assert.That(actualError.Contains(expectedError), "Assertion on error message");
         }
