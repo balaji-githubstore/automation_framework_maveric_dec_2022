@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace EmployeeManagement
 {
-    public class DemoTest
+    public class DemoAttributesTest
     {
         [Test,Repeat(2)]
         public void Demo1Test()
