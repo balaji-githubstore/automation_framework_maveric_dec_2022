@@ -13,7 +13,7 @@ namespace EmployeeManagement
 {
     public class LoginTest : AutomationWrapper
     {
-        [Test,Retry(2)]
+        [Test,Retry(2),Order(1)]
         public void ValidLoginTest()
         {
             LoginPage loginPage= new LoginPage(driver);
@@ -28,7 +28,7 @@ namespace EmployeeManagement
             Assert.That(actualUrl, Is.EqualTo("https://opensource-demo.orangehrmlive.com/web/index.php/dashboard/index"));
         }
 
-        [Test,TestCaseSource(typeof(DataSource), nameof(DataSource.InvalidLoginData2))]
+        [Test,Order(2),TestCaseSource(typeof(DataSource), nameof(DataSource.InvalidLoginData2))]
         public void InvalidLoginTest(string username, string password, string expectedError)
         {
             LoginPage loginPage = new LoginPage(driver);

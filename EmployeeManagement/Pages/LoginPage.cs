@@ -1,5 +1,6 @@
 ﻿using DocumentFormat.OpenXml.Bibliography;
 using OpenQA.Selenium;
+using OpenQA.Selenium.Support.UI;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,15 +18,22 @@ namespace EmployeeManagement.Pages
         private By _errorLocator = By.XPath("//p[contains(normalize-space(),'cred')]");
 
         private IWebDriver driver;
+        private DefaultWait<IWebDriver> _wait;
 
         public LoginPage(IWebDriver driver)
         {
             this.driver = driver;
+
+            _wait = new DefaultWait<IWebDriver>(driver);
+            _wait.IgnoreExceptionTypes(typeof(Exception));
+            _wait.Timeout=TimeSpan.FromSeconds(30);
         }
 
         public void EnterUsername(string username)
         {
-            driver.FindElement(_usernameLocator).SendKeys(username);
+            //driver.FindElement(_usernameLocator).SendKeys(username);
+
+            _wait.Until(x => x.FindElement(_usernameLocator)).SendKeys(username);
         }
 
         public void EnterPassword(string password)
